@@ -1,4 +1,4 @@
-import DiscordBall.db_interface as db
+import Utils.db_interface as db
 
 TABLE = 'Players'
 
