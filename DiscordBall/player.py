@@ -34,7 +34,7 @@ class Player:
         position: player's primary defensive position
         batting_type: player's batting type
         pitching_type: player's pitching type
-        pitching_bonus: player's pitching bonus
+        hand_bonus: player's pitching bonus
         hand: left or right
         status: 1=active, 2=retired, etc
         always_keep: whether or not the bot should always assume the player is going to keep their pitch on substitutions, defaults to false
@@ -97,7 +97,7 @@ class Player:
         position: player's primary defensive position
         batting_type: player's batting type
         pitching_type: player's pitching type
-        pitching_bonus: player's pitching bonus
+        hand_bonus: player's pitching bonus
         hand: left or right
         status: 1=active, 2=retired, etc
         always_keep: whether or not the bot should always assume the player is going to keep their pitch on substitutions, defaults to false
@@ -126,8 +126,8 @@ class Player:
             self.batting_type = kwargs['batting_type']
         if 'pitching_type' in kwargs:
             self.pitching_type = kwargs['pitching_type']
-        if 'pitching_bonus' in kwargs:
-            self.pitching_bonus = kwargs['pitching_bonus']
+        if 'hand_bonus' in kwargs:
+            self.pitching_bonus = kwargs['hand_bonus']
         if 'hand' in kwargs:
             self.hand = kwargs['hand']
         if 'status' in kwargs:
