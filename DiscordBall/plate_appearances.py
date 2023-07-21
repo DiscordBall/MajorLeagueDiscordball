@@ -1,4 +1,5 @@
 import DiscordBall
+from Utils import db
 
 
 class GameState:

@@ -1,4 +1,4 @@
-import Utils.db_interface as db
+from Utils import db
 
 
 class OnBaseCount:
