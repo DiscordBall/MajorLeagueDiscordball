@@ -1,8 +1,9 @@
 import sqlite3
+import os
 from sqlite3 import Error
 
 
-db_name = 'mld.db'
+db_name = f'{os.path.dirname(os.getcwd())}\\mld.db'
 SYMBOL = '?'
 
 

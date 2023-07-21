@@ -2,3 +2,5 @@
 *.xml
 *.iml
 *.pyc
+Utils/token.pickle
+Utils/credentials.json
