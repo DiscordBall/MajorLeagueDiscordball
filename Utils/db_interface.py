@@ -55,9 +55,12 @@ def update_table(table_name: str, columns: dict, where: dict):
     sql = sql[0:-1]
     sql += ' WHERE'
     for condition in where:
-        sql += f' {condition}={SYMBOL},'
-        data.append(where[condition])
-    sql = sql[0:-1]  # trim extra , at the end
+        if where[condition] is not None:
+            sql += f' {condition}={SYMBOL} AND'
+            data.append(where[condition])
+        else:
+            sql += f' {condition} IS NULL AND'
+    sql = sql[0:-4]  # trim extra AND at the end
     update_database(sql, tuple(data))
 
 
@@ -67,8 +70,11 @@ def select_data(table_name: str, columns: str, conditions: dict):
     if conditions:
         sql += ' WHERE'
         for item in conditions:
-            sql += f' {item}={SYMBOL} AND'
-            data.append(conditions[item])
+            if conditions[item] is not None:
+                sql += f' {item}={SYMBOL} AND'
+                data.append(conditions[item])
+            else:
+                sql += f' {item} IS NULL AND'
         sql = sql[0:-4]
     return fetch_all(sql, tuple(data))
 
