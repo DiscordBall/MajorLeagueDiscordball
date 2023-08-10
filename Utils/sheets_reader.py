@@ -4,10 +4,10 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 
-def read_sheet(spreadsheet_id, page_name):
+def get_creds():
     creds = None
     if os.path.exists(f'{os.path.dirname(os.getcwd())}\\Utils\\token.pickle'):
         with open(f'{os.path.dirname(os.getcwd())}\\Utils\\token.pickle', 'rb') as token:
@@ -20,8 +20,44 @@ def read_sheet(spreadsheet_id, page_name):
             creds = flow.run_local_server(port=0)
         with open(f'{os.path.dirname(os.getcwd())}\\Utils\\token.pickle', 'wb') as token:
             pickle.dump(creds, token)
-    service = build('sheets', 'v4', credentials=creds)
-    sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=spreadsheet_id, range=page_name).execute()
-    values = result.get('values', [])
-    return values
+    return creds
+
+
+def get_service_sheets():
+    service = build('sheets', 'v4', credentials=get_creds()).spreadsheets().values()
+    return service
+
+
+def read_sheet(spreadsheet_id, page_name):
+    service = get_service_sheets()
+    return service.get(spreadsheetId=spreadsheet_id, range=page_name).execute().get('values', [])
+
+
+def append_sheet(spreadsheet_id, page_name, data):
+    get_service_sheets().append(spreadsheetId=spreadsheet_id,
+                                range=page_name,
+                                valueInputOption='USER_ENTERED',
+                                insertDataOption='INSERT_ROWS',
+                                body={"values": [list(data)]}
+                                ).execute()
+
+
+def batch_update(spreadsheet_id, page_name, data):
+    data = [
+        {
+            'range': page_name,
+            'values': data
+        },
+        # Additional ranges to update ...
+    ]
+    body = {
+        'valueInputOption': 'USER_ENTERED',
+        'data': data
+    }
+
+    get_service_sheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+
+
+def clear_page(spreadsheet_id, page_name):
+    service = get_service_sheets()
+    service.clear(spreadsheetId=spreadsheet_id, range=page_name, body={}).execute()
