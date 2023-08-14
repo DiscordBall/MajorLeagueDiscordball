@@ -29,16 +29,6 @@ def parse_ranges_from_sheet(sheet_id: str, range_type: str):
     return output_dict
 
 
-def write_to_sheet(sheet_id, page_name, data):
-    while True:
-        try:
-            sheets.append_sheet(sheet_id, page_name, [str(x) for x in data])
-            return
-        except:
-            print('Ran into error writing to sheet, will wait 5 seconds and try again...')
-            time.sleep(5)
-
-
 def generate_all_ranges(sheet_id: str, ranges_dict: dict, range_type: str):
     output_rows = [labels]  # Column headers
 
