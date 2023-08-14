@@ -19,8 +19,8 @@ class GameState:
 
 
 class Matchup:
-    batting_type: DiscordBall.BattingType = None
-    pitching_type: DiscordBall.PitchingType = None
+    batting_type: DiscordBall.BattingRanges = None
+    pitching_type: DiscordBall.PitchingRanges = None
     pitching_bonus: DiscordBall.PitchingBonus = None
     hand_bonus_applies: bool = False
     park: DiscordBall.Park = None

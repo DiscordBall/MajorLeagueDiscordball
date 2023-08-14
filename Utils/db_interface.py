@@ -3,7 +3,7 @@ import os
 from sqlite3 import Error
 
 
-db_name = f'{os.path.dirname(os.getcwd())}\\mld.db'
+db_name = f'{os.path.dirname(os.getcwd())}\\MajorLeagueDiscordball\\mld.db'
 SYMBOL = '?'
 
 
